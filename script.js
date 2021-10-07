@@ -1,7 +1,10 @@
 const dino = document.querySelector(".dino")
 const background = document.querySelector(".background")
+const totalPoints = document.querySelector(".points")
 let isJumping = false
 let position = 0
+let points = 0
+let gameOver = false
 
 function handleKeyUp(event){
     if(event.keyCode === 32){
@@ -54,10 +57,20 @@ function createCactus(){
         } else if(cactusPosition > 0 && cactusPosition < 60 && position < 60) {
             //Game Over
             clearInterval(leftInterval)
-            document.body.innerHTML = '<h1 class="gameover">Fim de Jogo</h1>'
+            document.body.innerHTML = `
+                <div class="gameover">
+                    <h1>Fim de Jogo</h1>
+                    <span>Pontuação Final : ${points}</span>
+                </div>
+            `
+            gameOver = true
         } else {
             cactusPosition -= 10
             cactus.style.left = `${cactusPosition}px`
+            if(gameOver === false){
+                points++
+                totalPoints.innerHTML = points
+            }
         }
 
     }, 20)
